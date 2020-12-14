@@ -83,6 +83,7 @@ public class Bike_shop {
         System.out.println(bicycle.get(select).getPrice());
         System.out.println("Complete!!");
         money_admin.money += bicycle.get(select).getPrice();
+        total += bicycle.get(select).getPrice();
         bicycle.remove(select);
         System.out.println("-----------------");
         System.out.println("1).Back to buy");
