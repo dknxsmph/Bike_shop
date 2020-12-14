@@ -2,7 +2,7 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Bike_shop {
-    private int count;
+    private double total;
     private ArrayList<Bicycle> bicycle = new ArrayList<Bicycle>();
     Cal_price money_admin = new Cal_price();
     Scanner input = new Scanner(System.in);
@@ -31,19 +31,7 @@ public class Bike_shop {
                 int select_menu = input.nextInt();
                 switch (select_menu) {
                     case 1:
-                        if(bicycle.size()>0){
-                        System.out.printf("Bicycle is available:%d  \n",bicycle.size());
-                        System.out.println(toString());
-                        System.out.println("Enter num of bicycle for buy :");
-                        int num = input.nextInt();
-                        System.out.println("Enter id of bicycle for buy :");
-                        int id = input.nextInt();
-                        if (match_id(num, id)) {
-                            Buy_bike(num - 1);
-                        } else {
-                            System.out.println("Your enter id not macth num of bike!!");
-                        }
-                        }else System.out.println("Don't have bike");
+                        bikeList();
                         break;
                     case 2:
                         Admin();
@@ -73,13 +61,47 @@ public class Bike_shop {
         return false;
 
     }
+    public void bikeList() {
+        if (bicycle.size() > 0) {
+            System.out.printf("Bicycle is available:%d  \n", bicycle.size());
+            System.out.println(toString());
+            System.out.println("Enter num of bicycle for buy :");
+            int num = input.nextInt();
+            System.out.println("Enter id of bicycle for buy :");
+            int id = input.nextInt();
+            if (match_id(num, id)) {
+                Buy_bike(num - 1);
+            } else {
+                System.out.println("Your enter id not macth num of bike!!");
+            }
+        } else {
+            System.out.println("Don't have bike");
+        }
+    }
 
     public void Buy_bike(int select) {
         System.out.println(bicycle.get(select).getPrice());
         System.out.println("Complete!!");
         money_admin.money += bicycle.get(select).getPrice();
-        count++;
         bicycle.remove(select);
+        System.out.println("-----------------");
+        System.out.println("1).Back to buy");
+        System.out.println("2).Bill");
+        System.out.println("-----------------");
+        System.out.println("Enter your choice:");
+        int num = input.nextInt();
+        switch (num) {
+            case 1:
+                bikeList();
+                break;
+            case 2:
+                System.out.println(bill());
+                total = 0;
+                break;
+             default:
+                 input.reset();
+                 bikeList();
+        }
      }
 
     public void Admin() {
@@ -143,6 +165,14 @@ public class Bike_shop {
         } else {
             System.out.println("Your enter id not macth num of bike!!");
         }
+    }
+    public String bill(){
+    StringBuilder s  = new StringBuilder();
+    s.append("----------- Bill ----------- \n");
+    
+    s.append("\t").append(total).append(" Bath \n");
+    s.append("---------------------------- \n");
+    return s.toString();
     }
 
     @Override
